@@ -87,26 +87,33 @@ int main()
 void moveOddItemsToBack(LinkedList *ll)
 {
 	LinkedList tmpll;
+	tmpll.head = NULL;
+	tmpll.size = 0;
+
 	ListNode *cur;
+	ListNode *BackupNext;
 	ListNode *latestEven = NULL;
 	if (ll == NULL)
 		return;
 	cur = ll->head;
-
+	int visitedCount = 0;
 	while (cur != NULL)
 	{
-		if(cur->item % 2 == 1)
+		BackupNext = cur->next;
+		if((cur->item % 2) == 1)
 		{
 			insertNode(&tmpll, tmpll.size, cur->item);
+			int a = removeNode(ll, visitedCount);
+			visitedCount--;
 			// delete this node.
-
 		}
 		else
 		{
 			latestEven = cur;
 		}
+		visitedCount++;
 
-		cur = cur->next;
+		cur = BackupNext;
 	}
 	if(latestEven != NULL)
 		latestEven->next = tmpll.head;
@@ -206,7 +213,6 @@ int insertNode(LinkedList *ll, int index, int value){
 
 
 int removeNode(LinkedList *ll, int index){
-
 	ListNode *pre, *cur;
 
 	// Highest index we can remove is size-1
@@ -226,7 +232,6 @@ int removeNode(LinkedList *ll, int index){
 	// Find the nodes before and after the target position
 	// Free the target node and reconnect the links
 	if ((pre = findNode(ll, index - 1)) != NULL){
-
 		if (pre->next == NULL)
 			return -1;
 
