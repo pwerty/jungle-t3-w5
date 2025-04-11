@@ -71,7 +71,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			//removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -89,8 +89,86 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int insertSortedLL(LinkedList *ll, int item)
-{
-	/* add your code here */
+{	
+	ListNode *cur;
+	int numCnt = 0;
+	if(ll->head == NULL)
+	{
+		cur = ll->head;
+		ll->head = malloc(sizeof(ListNode));
+		ll->head->item = item;
+		ll->head->next = cur;
+		ll->size++;
+		return 0;
+		// 첫 번째 아이템 삽입 위치는 반드시 0이니 당연하게 0을 반환하도록 한다.
+	}
+	else 
+	{
+		int isInsertable = 0;
+		ListNode *exists;
+		exists = ll->head;
+		if(exists->item == item)
+			return -1;
+
+		// cur가 제대로 준비 안된 상태에서 cur->item 사용 시도해서 SegFault
+		if(exists->item > item)
+		{
+			cur = ll->head;
+			ll->head = malloc(sizeof(ListNode));
+			ll->head->item = item;
+			ll->head->next = exists;
+			ll->size++;
+			return 0;
+		}
+		while (isInsertable == 0)
+		{
+			if(exists->next == NULL)
+			{
+				cur = exists->next;
+				exists->next = malloc(sizeof(ListNode));
+				exists->next->item = item;
+				exists->next->next = NULL;
+				ll->size++;
+				isInsertable = 1;
+				return ll->size - 1;
+				// 맨 끝 도달시 이렇게 반환하도록 한다.
+			}
+
+			if(exists->next->item == item) // is this already exists?
+				return -1;
+
+			if(exists->next->item < item)
+			{
+				exists = exists->next;
+				numCnt++;
+			}
+			else // 아이템을 배치 해야하는 상태
+			{
+				ListNode *tmp = exists->next;
+				cur = exists->next;
+				exists->next = malloc(sizeof(ListNode));
+				exists->next->item = item;
+				exists->next->next = tmp;
+				ll->size++;
+
+				isInsertable = 1;
+				return numCnt + 1;
+			}
+			
+		}
+	}
+
+	/* 
+		처음 노드 부터, selected.next.item 보다 작으면 selected.next에 cur가 들어가야 한다.
+		하지만 중요한 것은 맥락상 첫 노드와 끝 노드가 들어갈 위치가 된 경우에도 범용성을 가져야하는데..
+		ll->head 보다 작은 상황이 날 수 있다. 그럼 새로운 ll->head를 정의하기
+
+		selected.next가 없을 수도 있다. 즉 마지막 노드에 도달 한 상태라면
+
+	*/
+
+
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

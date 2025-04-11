@@ -80,7 +80,7 @@ int main()
 			printf("Back linked list: ");
 			printList(&resultBackList);
 			printf("\n");
-			removeAllItems(&ll);
+			//removeAllItems(&ll);
 			removeAllItems(&resultFrontList);
 			removeAllItems(&resultBackList);
 			break;
@@ -102,7 +102,34 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	int pivotCount = ll->size;
+	if(pivotCount % 2 == 1)
+	{
+		pivotCount /= 2;
+		pivotCount += 1;
+	}
+	else
+	{
+		pivotCount /= 2;
+	}
+
+	ListNode *target;
+	target = ll->head;
+	int cnt = 0;
+	resultFrontList->head = ll->head;
+	while (target != NULL)
+	{
+		cnt++;
+		if(cnt == pivotCount)
+		{
+			ListNode *rightHead;
+			rightHead = target->next;
+			target->next = NULL;
+			resultBackList->head = rightHead;
+		}
+		target = target->next;
+	}
+		
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

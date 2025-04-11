@@ -86,7 +86,33 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	LinkedList tmpll;
+	ListNode *cur;
+	ListNode *latestEven = NULL;
+	if (ll == NULL)
+		return;
+	cur = ll->head;
+
+	while (cur != NULL)
+	{
+		if(cur->item % 2 == 1)
+		{
+			insertNode(&tmpll, tmpll.size, cur->item);
+			// delete this node.
+
+		}
+		else
+		{
+			latestEven = cur;
+		}
+
+		cur = cur->next;
+	}
+	if(latestEven != NULL)
+		latestEven->next = tmpll.head;
+	else
+		ll->head = tmpll.head;
+	// 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
