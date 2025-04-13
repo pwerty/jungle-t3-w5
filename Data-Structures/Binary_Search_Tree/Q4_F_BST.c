@@ -91,7 +91,39 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	Stack sta;
+	sta.top = NULL;
+	int Rable = 1;
+	int Lable = 1;
+
+	push(&sta, root);
+
+	while (Lable == 1 || Rable == 1)
+	{
+		Rable = 1;
+		Lable = 1;
+		BSTNode *poped = pop(&sta);
+
+		push(&sta, poped);
+
+		if(poped->right != NULL)
+			push(&sta, poped->right);
+		else
+			Rable = 0;
+
+		if(poped->left != NULL)
+			push(&sta, poped->left);
+		else
+			Lable = 0;
+
+
+	}
+
+	while (isEmpty(&sta) == 0)
+	{
+		//BSTNode *poped = pop()
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

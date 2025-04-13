@@ -111,7 +111,7 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	// value가 나올때까지 stack에서 값을 뽑습니다..??? 뭐요?
 }
 
 //////////////////////////////////////////////////////////////////////////////////
