@@ -101,10 +101,60 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////
 
+// 본 퀘스트 처리 전 따로 정의한 함수. 이 함수는 스택의 들어있는 원소 갯수를 알려줍니다.
+int custom_stackSize(Stack *s)
+{
+	return (s->ll).size;
+}
+
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
-}
+	// 위배할 쌍이 없기때문에 비어있는 경우도 연속적이라고 정의함.
+	int size = custom_stackSize(s);
+	int subValue = 0;
+	int isFirstTime = 1; // using like bool | 1 : true | 0 : false
+	int isWrong = 0; // 1 : wrong | 0 : not wrong
+	while(isEmptyStack(s) == 0)
+	{
+		if(size % 2 == 1)
+		{
+			// 아이템이 홀수개라면 pairwise부터 성립하지 않으니 즉시 종료합니다.
+			isWrong = 1;
+			return 0;
+		}
+		else
+		{
+			// 일단 정황상, 이후에 나오는 아이템이 수치값이 더 커야한다.
+			int low = pop(s);
+			int notLow = pop(s);
+			
+			if(isFirstTime == 1)
+			{
+				isFirstTime = 0;
+				subValue = abs(low - notLow);
+				continue;
+			}
+
+			if(subValue == abs(low - notLow))
+			{
+				isWrong = 0;
+			}
+			else
+			{
+				isWrong = 1;
+				break;
+			}
+		}
+		}
+
+		return !isWrong;
+	}
+
+
+  // 스택에 아이템이 주어집니다. 이게 쌍 단위로 연속적인지 확인해야합니다.
+  // 스택에 아이템이 짝수라면 
+
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

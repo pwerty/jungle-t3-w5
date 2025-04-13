@@ -104,7 +104,75 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+
+// 스택이 연결 리스트 기반이며, 이 연결 리스트의 아이템은 int만 담을 수 있게 구성 되어있습니다.
+// 전체적인 그림을 해치지 않는 선에서 구현하려고 하니, 각 괄호에 대해 매핑 시키는게 좋을 것 같습니다.
+// 여기서 이용할 매핑은 () 는 1, {}는 2, []는 3 입니다.
+
+// 열리는 괄호, 즉 ( { [ 가 들어오면 해당하는 숫자를 스택에 푸시합니다.
+// 닫히는 괄호, 즉 ), }, ]가 들어오면 해당하는 숫자가 Stack의 top에 있는지 확인합니다.
+	// 물론 top에 없으면, 즉시 프로그램을 종료합니다.
+	// 0이 balanced True, 1이 NOT balanced 입니다.
+	Stack st;
+
+	st.ll.head = NULL;
+	st.ll.size = 0;
+	int item = 0;
+	int notBalanced = 0;
+	for (int i = 0; expression[i] != '\0'; i++) {
+		char ch = expression[i];
+		
+		switch(ch)
+		{
+			case '(':
+				push(&st, 1);
+				break;
+			case ')':
+				item = peek(&st);
+				if(item != 1)
+				{
+					notBalanced = 1;
+				}
+				else
+					item = pop(&st);
+				break;
+			case '{':
+				push(&st, 2);
+				break;
+			case '}':
+				item = peek(&st);
+				if(item != 2)
+				{
+					notBalanced = 1;
+				}
+				else
+					item = pop(&st);
+				break; 
+			case '[':
+				push(&st, 3);
+				break;
+			case ']':
+				item = peek(&st);
+				if(item != 3)
+				{
+					notBalanced = 1;
+				}
+				else
+					item = pop(&st);
+				break;
+
+			default:
+				break;
+		}
+		
+		if(notBalanced == 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
+
+
 }
 
 ////////////////////////////////////////////////////////////
