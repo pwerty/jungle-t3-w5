@@ -103,9 +103,46 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+int Compare(int a, int b)
+{
+    if (a > b)
+        return 1;
+    else
+        return 0;
+
+}
+
+
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+    if(node == NULL)
+        return;
+	Stack stack;
+    stack.top = NULL;
+    int isContinue = 1;
+    push(&stack, node);
+
+    while (isContinue)
+    {
+        BTNode *popedItem = pop(&stack);
+        if(popedItem != NULL)
+        {
+            if(Compare(m, popedItem->item) == 1)
+                printf("%d ", popedItem->item);
+
+            if(popedItem->right != NULL)
+                push(&stack, popedItem->right);
+            
+            if(popedItem->left != NULL)
+                push(&stack, popedItem->left);
+            
+
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////

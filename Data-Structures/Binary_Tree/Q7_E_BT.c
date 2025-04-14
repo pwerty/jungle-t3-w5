@@ -35,6 +35,7 @@ typedef struct _stack
 ///////////////////////// Function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
+int customCompare(int a, int b);
 int smallestValue(BTNode *node);
 
 BTNode *createBTNode(int item);
@@ -100,9 +101,47 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+int customCompare(int a, int b)
+{
+    if (a > b)
+        return 1;
+    else
+        return 0;
+}
+
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+    Stack stack;
+    stack.top = NULL;
+    if(node == NULL)
+        return -1;
+	int mostLow = node->item;
+    int isContinue = 1;
+    
+    push(&stack, node);
+    // 어디로 가도 다 돌면 되니까 ___order traversal 성향을 타진 않는다.
+    while (isContinue)
+    {
+        BTNode *poped = pop(&stack);
+        if(poped != NULL)
+        {
+            if (customCompare(mostLow, poped->item) == 1)
+                mostLow = poped->item;
+
+            if (poped->left != NULL)
+                push(&stack, poped->left);
+            
+            if (poped->right != NULL)
+                push(&stack, poped->right);
+            
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    }
+    return mostLow;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

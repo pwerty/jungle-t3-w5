@@ -103,7 +103,40 @@ int main()
 int sumOfOddNodes(BTNode *node)
 
 {
-    /* add your code here */
+    Stack stack;
+    stack.top = NULL;
+
+    int isContinue = 1;
+    int result = 0;
+
+    push(&stack, node);
+
+    while (isContinue)
+    {
+        BTNode *popItem = pop(&stack);
+        if(popItem != NULL)
+        {
+            if(popItem->left != NULL)
+            {
+                push(&stack, popItem->left);
+            }
+
+            if(popItem->right != NULL)
+            {
+                push(&stack, popItem->right);
+            }
+
+            if(popItem->item % 2 == 1)
+            {
+                result += popItem->item;
+            }
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    }
+    return result;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

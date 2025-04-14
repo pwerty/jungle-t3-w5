@@ -101,7 +101,41 @@ int main()
 int countOneChildNodes(BTNode *node)
 
 {
-    /* add your code here */
+    Stack st;
+    st.top = NULL;
+    int isContinue = 1;
+    int result = 0;
+    push(&st, node);
+    while (isContinue)
+    {
+        int ChildCnt = 0;
+        BTNode *popItem = pop(&st); 
+        if(popItem != NULL)
+        {
+            if(popItem->left != NULL)
+            {
+                push(&st, popItem->left);
+                ChildCnt++;
+            }
+
+            if(popItem->right != NULL)
+            {
+                push(&st, popItem->right);
+                ChildCnt++;
+            }
+        }
+        else
+        {
+            isContinue = 0;
+        }
+
+        if(ChildCnt == 1)
+        {
+            result++;
+        }
+    }
+    return result;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
