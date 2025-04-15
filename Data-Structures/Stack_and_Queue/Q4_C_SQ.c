@@ -120,14 +120,12 @@ void reverse(Queue *q)
 
 	while (isEmptyQueue(q) == 0)
 	{
-		printf("queue empty testing \n");
 		int item = dequeue(q);
 		push(&tmpStack, item);
 	}
 
 	while (isEmptyStack(&tmpStack) == 0)
 	{
-		printf("stack empty testing \n");
 		int item = pop(&tmpStack);
 		enqueue(q, item);
 	}

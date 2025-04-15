@@ -94,10 +94,71 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+int max(int a, int b)
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+}
+
+int findDeep(BTNode *node, int childCnt)
+{
+    if(node->left == NULL && node->right == NULL)
+        return childCnt;
+
+    int Lresult = -1;
+    int Rresult = -1;
+
+    if(node->left != NULL)
+        Lresult = findDeep(node->left, childCnt + 1);
+    
+    if(node->right != NULL)
+        Rresult = findDeep(node->right, childCnt + 1);
+
+    return max(Lresult, Rresult);
+}
+
+
 int maxHeight(BTNode *node)
 
 {
-    /* add your code here */
+    Stack *st = malloc(sizeof(Stack));
+    st->top = NULL;
+    int isContinue = 1;
+    push(st, node);
+    int Lresult = 0;
+    int Rresult = 0;
+
+    while (isContinue)
+    {
+        BTNode *poped = pop(st);
+        if(poped != NULL)
+        {
+            Lresult = -1;
+            Rresult = -1;
+            if(poped->left != NULL)
+            {
+                push(st, poped->left);
+                Lresult = findDeep(poped->left, 1);
+            }
+
+
+            if(poped->right != NULL)
+            {
+                push(st, poped->right);
+                Rresult = findDeep(poped->right, 1);
+            }
+
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    }
+    free(st);
+    return max(Lresult, Rresult);
+    // 저절로 개행 안해주길래 내 재량껏 삽입
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

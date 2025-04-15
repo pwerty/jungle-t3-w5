@@ -111,7 +111,27 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
+	int isContinue = 1;
+
+	while (isContinue)
+	{
+		int poped = pop(s);
+		if(poped != MIN_INT)
+		{
+			if(poped == value)
+			{
+				isContinue = 0;
+				push(s, poped);
+			}	
+		}
+		else
+		{
+			isContinue = 0;
+		}
+	}
+
 	// value가 나올때까지 stack에서 값을 뽑습니다..??? 뭐요?
+	// remove until이니까 value가 나올 때까지 값을 저장해두다가?
 }
 
 //////////////////////////////////////////////////////////////////////////////////

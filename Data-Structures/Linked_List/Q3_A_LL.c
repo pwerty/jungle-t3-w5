@@ -83,44 +83,62 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 사전 정의 함수 사용 된 내용
 void moveOddItemsToBack(LinkedList *ll)
 {
-	LinkedList tmpll;
-	tmpll.head = NULL;
-	tmpll.size = 0;
+	
+	LinkedList* tmpll = malloc(sizeof(LinkedList));
+	tmpll->head = NULL;
+	tmpll->size = 0;
+	// 해당 되는 수 (여기서는 홀수)를 저장 할 연결리스트 신규 선언
 
 	ListNode *cur;
+	// 모든 아이템 순회에 필요한 커서 선언
 	ListNode *BackupNext;
+	// 홀수 처리 발생시, 다음 목적지 누락 방지를 위한 백업
 	ListNode *latestEven = NULL;
+	// 가장 마지막에 있는 짝수 노드에 최종 완성된 홀수 리스트를 이어 줄 예정.
+	
 	if (ll == NULL)
 		return;
+	// 유효하지 않은 연결 리스트에 대한 작동 차단
 	cur = ll->head;
 	int visitedCount = 0;
+	// 사전 정의 함수 사용을 위해서는 n번째 위치 파악이 필요하여 선언.
 	while (cur != NULL)
 	{
 		BackupNext = cur->next;
+		// 목적지 누락 방지
 		if((cur->item % 2) == 1)
 		{
-			insertNode(&tmpll, tmpll.size, cur->item);
+			insertNode(tmpll, tmpll->size, cur->item);
 			int a = removeNode(ll, visitedCount);
+			// 홀수에 대한 처리로, 별도의 연결 리스트에 추가하며 기존 연결 리스트에서 제거
 			visitedCount--;
-			// delete this node.
+			// 기존 리스트에서 한 개의 아이템이 빠졌으니 길이도 달라짐, 이 visitedCount로 해당 내용에 맞춰 조정되어야함.
+			
 		}
 		else
 		{
 			latestEven = cur;
+			// 짝수의 경우 붙여줘야하는 위치를 현재 위치로 조정하기
 		}
 		visitedCount++;
 
 		cur = BackupNext;
+		// cur 갱신 후 쭉 진행
 	}
+	// 전체 내용 마무리 된 경우, 마지막에 ll에 매핑시켜서 끝내기
 	if(latestEven != NULL)
-		latestEven->next = tmpll.head;
+		latestEven->next = tmpll->head;
 	else
-		ll->head = tmpll.head;
-	// 
+		ll->head = tmpll->head;
+	
+	free(tmpll);
+	// is free
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

@@ -100,9 +100,72 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+int max(int a, int b)
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+}
+
+int findGGChild(BTNode *node, int childCnt)
+{
+    if(childCnt == 3)
+        return 1;
+
+    if(node->left == NULL && node->right == NULL)
+        return -1;
+
+    int Lresult = -1;
+    int Rresult = -1;
+
+    if(node->left != NULL)
+        Lresult = findGGChild(node->left, childCnt + 1);
+    
+    if(node->right != NULL)
+        Rresult = findGGChild(node->right, childCnt + 1);
+
+    return max(Lresult, Rresult);
+}
+
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+	Stack *st = malloc(sizeof(Stack));
+    st->top = NULL;
+    int isContinue = 1;
+    push(&st, node);
+
+    while (isContinue)
+    {
+        BTNode *poped = pop(st);
+        if(poped != NULL)
+        {
+            int Lresult = -1;
+            int Rresult = -1;
+            if(poped->left != NULL)
+            {
+                push(st, poped->left);
+                Lresult = findGGChild(poped->left, 1);
+            }
+
+
+            if(poped->right != NULL)
+            {
+                push(st, poped->right);
+                Rresult = findGGChild(poped->right, 1);
+            }
+
+            if(max(Lresult, Rresult) > 0)
+                printf("%d ", poped->item);
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    }
+    printf("\n");
+    free(st);
+    // 저절로 개행 안해주길래 내 재량껏 삽입
 }
 
 //////////////////////////////////////////////////////////////////////////////////

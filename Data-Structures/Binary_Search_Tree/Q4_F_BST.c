@@ -89,8 +89,61 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+void postOrderIterativeSub(Stack * str, BSTNode *deNode)
+{
+	if(deNode == NULL)
+		return;
+	// 유효하지 않은 노드에 대한 재귀 작동 차단
+
+	push(str, deNode);
+	if(deNode->left == NULL && deNode ->right == NULL)	
+		return;
+	// 리프 노드인 경우 삽입 이후 진행 할 필요가 없어서 생략. 위의 NULL과 겹치나, 약간의 재귀 단계를 낮추는 효과 기대
+
+	
+		postOrderIterativeSub(str, deNode->right);
+		postOrderIterativeSub(str, deNode->left);
+		// 존재하는 자식 노드에 대해 스택에 추가 시도
+
+}
+
 void postOrderIterativeS1(BSTNode *root)
 {
+	// 0414-2100 재귀 쓰는거 아니라는데.. 한번 알아보기.
+	if(root == NULL)
+		return;
+
+	Stack *stack = malloc(sizeof(Stack));
+	stack->top = NULL;
+	// 흐름에 따라 내용을 저장해 둘 Stack을 선언합니다.
+
+	postOrderIterativeSub(stack, root);
+	// root부터 Stack 추가 과정 시작
+
+	// isEmpty 대신 사용하는 함수, C에는 True/False 가 없어서 대신 1/0을 사용
+	int isContinue = 1;
+
+	while (isContinue)
+	{
+		BSTNode *poped = pop(stack);
+		if(poped != NULL)
+		{
+			printf(" %d", poped->item);
+			// 모든 아이템에 대해 출력 시도
+		}
+		else
+		{
+			isContinue = 0;
+			// pop 한 아이템이 NULL이면 Stack이 비었으니 중단
+		}
+	}
+
+	free(stack);
+	// 스택 메모리 할당 해제
+
+}
+
+	/*
 	Stack sta;
 	sta.top = NULL;
 	int Rable = 1;
@@ -123,8 +176,7 @@ void postOrderIterativeS1(BSTNode *root)
 	{
 		//BSTNode *poped = pop()
 	}
-
-}
+		*/
 
 ///////////////////////////////////////////////////////////////////////////////
 

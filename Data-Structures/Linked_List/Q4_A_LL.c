@@ -86,9 +86,9 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	LinkedList tmpll;
-	tmpll.head = NULL;
-	tmpll.size = 0;
+	LinkedList* tmpll = malloc(sizeof(LinkedList));
+	tmpll->head = NULL;
+	tmpll->size = 0;
 
 	ListNode *cur;
 	ListNode *BackupNext;
@@ -102,7 +102,7 @@ void moveEvenItemsToBack(LinkedList *ll)
 		BackupNext = cur->next;
 		if((cur->item % 2) == 0)
 		{
-			insertNode(&tmpll, tmpll.size, cur->item);
+			insertNode(&tmpll, tmpll->size, cur->item);
 			int a = removeNode(ll, visitedCount);
 			visitedCount--;
 			// delete this node.
@@ -116,10 +116,11 @@ void moveEvenItemsToBack(LinkedList *ll)
 		cur = BackupNext;
 	}
 	if(latestOdd != NULL)
-		latestOdd->next = tmpll.head;
+		latestOdd->next = tmpll->head;
 	else
-		ll->head = tmpll.head;
-	// 
+		ll->head = tmpll->head;
+
+	free(tmpll);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

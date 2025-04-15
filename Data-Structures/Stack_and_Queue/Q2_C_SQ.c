@@ -60,8 +60,8 @@ int main()
 	ll.size = 0;
 
 	// Initalize the stack as an empty stack
-	s.ll.head = NULL;
-	s.ll.size = 0;
+		s.ll.head = NULL;
+		s.ll.size = 0;
 
 	printf("1: Insert an integer into the linked list:\n");
 	printf("2: Create the stack from the linked list:\n");
