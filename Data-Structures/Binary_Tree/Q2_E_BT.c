@@ -181,7 +181,6 @@ int maxHeight(BTNode *node)
             isContinue = 0;
         }
     return max(Lresult, Rresult);
-    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
