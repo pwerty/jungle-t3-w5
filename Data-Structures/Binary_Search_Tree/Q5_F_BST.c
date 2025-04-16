@@ -91,32 +91,34 @@ int main()
 
 void postOrderIterativeS2(BSTNode *root)
 {
-	Stack s1;
-	Stack s2;
+	Stack *s1 = malloc(sizeof(Stack));
+	Stack *s2 = malloc(sizeof(Stack));
 
-	s1.top = NULL;
-	s2.top = NULL;
+	s1->top = NULL;
+	s2->top = NULL;
 
-	push(&s1, root);
+	push(s1, root);
 
-	while (isEmpty(&s1) == 0)
+	while (isEmpty(s1) == 0)
 	{
-		BSTNode* poped = pop(&s1);
+		BSTNode* poped = pop(s1);
 
 		if(poped->left != NULL)
-			push(&s1, poped->left);
+			push(s1, poped->left);
 
 		if(poped->right != NULL)
-			push(&s1, poped->right);
-
-		push(&s2, poped);
+			push(s1, poped->right);
+		// 자식이 확인된 애들은 2번째 스택으로 옮겨지도록 하기
+		push(s2, poped);
 	}
 
-	while (isEmpty(&s2) == 0)
+	while (isEmpty(s2) == 0)
 	{
-		BSTNode* poped = pop(&s2);
+		BSTNode* poped = pop(s2);
 		printf("%d ", poped->item);
 	}
+	free(s1);
+	free(s2);
 
 }
 

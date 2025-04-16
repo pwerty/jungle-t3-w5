@@ -112,24 +112,26 @@ int main()
 
 void reverse(Queue *q)
 {
-	Stack tmpStack;
+	Stack *tmpStack = malloc(sizeof(Stack));
 
-	tmpStack.ll.head =NULL;
-	tmpStack.ll.size =0;
-	tmpStack.ll.tail=NULL;
+	tmpStack->ll.head = NULL;
+	tmpStack->ll.size = 0;
+	tmpStack->ll.tail = NULL;
 
 	while (isEmptyQueue(q) == 0)
 	{
 		int item = dequeue(q);
-		push(&tmpStack, item);
+		push(tmpStack, item);
+		// 비어 있지 않은 동안 모든 아이템을 뽑아서 stack에 넣는다.
 	}
 
-	while (isEmptyStack(&tmpStack) == 0)
+	while (isEmptyStack(tmpStack) == 0)
 	{
-		int item = pop(&tmpStack);
+		int item = pop(tmpStack);
 		enqueue(q, item);
+		// stack이 비어 있지 않은 동안 모든 아이템을 뽑는 즉시 다시 q에 넣는다.
 	}
-
+	free(tmpStack);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

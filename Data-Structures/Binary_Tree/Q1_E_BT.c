@@ -114,10 +114,25 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int identical(BTNode *tree1, BTNode *tree2)
-
 {
-    
-   /* add your code here */
+
+    if(tree1 == NULL && tree2 == NULL)
+        return 1;
+    else if(tree1 == NULL || tree2 == NULL)
+        return 0;
+    else if(tree1->item != tree2->item)
+        return 0;
+
+    int Lresult = 1;
+    int Rresult = 1;
+
+    Lresult = identical(tree1->left, tree2->left);
+    if(Lresult == 0)
+        return 0;
+
+    Rresult = identical(tree1->right, tree2->right);
+    if(Rresult == 0)
+        return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +195,7 @@ BTNode *createTree()
         }
 
         if(temp->right != NULL)
-            push(&stk,temp->right);
+             (&stk,temp->right);
         if(temp->left != NULL)
             push(&stk,temp->left);
     }

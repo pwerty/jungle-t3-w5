@@ -100,7 +100,7 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int sumOfOddNodes(BTNode *node)
+int sumOfOddNodesStack(BTNode *node)
 
 {
     Stack stack;
@@ -138,6 +138,23 @@ int sumOfOddNodes(BTNode *node)
     }
     return result;
 }
+
+int sumOfOddNodes(BTNode *node)
+{
+    if(node == NULL)
+        return 0;
+
+    int Lresult = 0;
+    int Rresult = 0;
+    Lresult = sumOfOddNodes(node->left);
+    Rresult = sumOfOddNodes(node->right);
+
+    if(node->item % 2 == 1)
+        return node->item + Lresult + Rresult;
+    else
+        return Lresult + Rresult;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

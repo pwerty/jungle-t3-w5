@@ -113,10 +113,11 @@ int balanced(char *expression)
 // 닫히는 괄호, 즉 ), }, ]가 들어오면 해당하는 숫자가 Stack의 top에 있는지 확인합니다.
 	// 물론 top에 없으면, 즉시 프로그램을 종료합니다.
 	// 0이 balanced True, 1이 NOT balanced 입니다.
-	Stack st;
 
-	st.ll.head = NULL;
-	st.ll.size = 0;
+	Stack *st = malloc(sizeof(Stack));
+
+	st->ll.head = NULL;
+	st->ll.size = 0;
 	int item = 0;
 	int notBalanced = 0;
 	for (int i = 0; expression[i] != '\0'; i++) {
@@ -125,40 +126,40 @@ int balanced(char *expression)
 		switch(ch)
 		{
 			case '(':
-				push(&st, 1);
+				push(st, 1);
 				break;
 			case ')':
-				item = peek(&st);
+				item = peek(st);
 				if(item != 1)
 				{
 					notBalanced = 1;
 				}
 				else
-					item = pop(&st);
+					item = pop(st);
 				break;
 			case '{':
-				push(&st, 2);
+				push(st, 2);
 				break;
 			case '}':
-				item = peek(&st);
+				item = peek(st);
 				if(item != 2)
 				{
 					notBalanced = 1;
 				}
 				else
-					item = pop(&st);
+					item = pop(st);
 				break; 
 			case '[':
-				push(&st, 3);
+				push(st, 3);
 				break;
 			case ']':
-				item = peek(&st);
+				item = peek(st);
 				if(item != 3)
 				{
 					notBalanced = 1;
 				}
 				else
-					item = pop(&st);
+					item = pop(st);
 				break;
 
 			default:
@@ -167,12 +168,12 @@ int balanced(char *expression)
 		
 		if(notBalanced == 1)
 		{
+			free(st);
 			return 1;
 		}
 	}
+	free(st);
 	return 0;
-
-
 }
 
 ////////////////////////////////////////////////////////////

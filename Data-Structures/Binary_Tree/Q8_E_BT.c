@@ -128,12 +128,12 @@ int findGGChild(BTNode *node, int childCnt)
     return max(Lresult, Rresult);
 }
 
-int hasGreatGrandchild(BTNode *node)
+int hasGreatGrandchildStack(BTNode *node)
 {
 	Stack *st = malloc(sizeof(Stack));
     st->top = NULL;
     int isContinue = 1;
-    push(&st, node);
+    push(st, node);
 
     while (isContinue)
     {
@@ -166,6 +166,30 @@ int hasGreatGrandchild(BTNode *node)
     printf("\n");
     free(st);
     // 저절로 개행 안해주길래 내 재량껏 삽입
+}
+
+int hasGreatGrandchild(BTNode *node)
+{
+    if(node == NULL)
+        return 0;
+    
+    BTNode *Lcur = node->left;
+    BTNode *Rcur = node->right;
+    int Lcount = 0;
+    int Rcount = 0;
+
+        Lcount = hasGreatGrandchild(Lcur);
+        Lcount++;
+
+        Rcount = hasGreatGrandchild(Rcur);
+        Rcount++;
+
+    int total = max(Lcount, Rcount);
+    if(total > 3)
+        printf("%d ", node->item);
+    
+    return total;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

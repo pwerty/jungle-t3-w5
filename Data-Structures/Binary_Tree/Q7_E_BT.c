@@ -8,6 +8,9 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#define INT_LOW -2147483647
+#define INT_MAX 2147483647
+
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -109,7 +112,7 @@ int customCompare(int a, int b)
         return 0;
 }
 
-int smallestValue(BTNode *node)
+int smallestValueStack(BTNode *node)
 {
     Stack stack;
     stack.top = NULL;
@@ -141,6 +144,32 @@ int smallestValue(BTNode *node)
         }
     }
     return mostLow;
+
+}
+
+int min(int a, int b)
+{
+    if (a > b)
+        return b;
+    else
+        return a;
+}
+
+int smallestValue(BTNode *node)
+{
+    if(node == NULL)
+        return -1;
+    int myValue = node->item;
+    int Lresult = INT_MAX;
+    int Rresult = INT_MAX;
+
+    if(node->left != NULL)
+            Lresult = smallestValue(node->left);
+    
+    if(node->right != NULL)
+            Rresult = smallestValue(node->right);
+
+    return min(myValue, min(Lresult, Rresult));
 
 }
 

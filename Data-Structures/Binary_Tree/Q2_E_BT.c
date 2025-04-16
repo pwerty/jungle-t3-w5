@@ -120,7 +120,7 @@ int findDeep(BTNode *node, int childCnt)
 }
 
 
-int maxHeight(BTNode *node)
+int maxHeightStack(BTNode *node)
 
 {
     Stack *st = malloc(sizeof(Stack));
@@ -159,6 +159,29 @@ int maxHeight(BTNode *node)
     free(st);
     return max(Lresult, Rresult);
     // 저절로 개행 안해주길래 내 재량껏 삽입
+}
+
+int maxHeight(BTNode *node)
+{
+    if(node == NULL)
+        return -1;
+    
+    int isContinue = 1;
+    int Lresult = 0;
+    int Rresult = 0;
+    BTNode *cur;
+    cur = node;
+        if(cur != NULL)
+        {
+            Lresult = findDeep(node->left, 1);
+            Rresult = findDeep(node->right, 1);
+        }
+        else
+        {
+            isContinue = 0;
+        }
+    return max(Lresult, Rresult);
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

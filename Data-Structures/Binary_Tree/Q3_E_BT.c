@@ -98,7 +98,7 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int countOneChildNodes(BTNode *node)
+int countOneChildNodesStack(BTNode *node)
 
 {
     Stack st;
@@ -136,6 +136,29 @@ int countOneChildNodes(BTNode *node)
     }
     return result;
 
+}
+
+int countOneChildNodes(BTNode *node)
+{
+    if(node == NULL)
+        return 0;
+    BTNode *cur;
+    cur = node;
+    int myCount = 0;
+    int Lcount = 0;
+    int Rcount = 0;
+    Lcount = countOneChildNodes(cur->left);
+    Rcount = countOneChildNodes(cur->right);
+
+    if(node->left == NULL && node->right == NULL)
+        myCount = 0;
+    else if(node->left != NULL && node->right != NULL)
+        myCount = 0;
+    else
+        myCount = 1;
+
+
+    return myCount + Lcount + Rcount;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

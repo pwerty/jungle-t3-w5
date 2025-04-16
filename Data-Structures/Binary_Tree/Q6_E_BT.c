@@ -113,7 +113,7 @@ int Compare(int a, int b)
 }
 
 
-void printSmallerValues(BTNode *node, int m)
+void printSmallerValuesStack(BTNode *node, int m)
 {
     if(node == NULL)
         return;
@@ -143,6 +143,18 @@ void printSmallerValues(BTNode *node, int m)
             isContinue = 0;
         }
     }
+}
+
+void printSmallerValues(BTNode *node, int target)
+{
+    if(node == NULL)
+        return;
+    
+    if(Compare(target, node->item) == 1)
+        printf("%d ", node->item);
+
+    printSmallerValues(node->left, target);
+    printSmallerValues(node->right, target);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
